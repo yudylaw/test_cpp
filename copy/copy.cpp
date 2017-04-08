@@ -104,7 +104,7 @@ int myrandom (int i) {
 }
 
 void random_shuffle() {
-	std::srand (unsigned (std::time(0)));
+	std::srand(std::time(NULL));
 	std::vector<int> nums = {121,3,5,333,7,9,10};
 	for (auto num : nums) {
 		cout<<num<<endl;
@@ -116,12 +116,54 @@ void random_shuffle() {
 	}
 }
 
+void subtest() {
+	string str = "1122221_110001:token_23_33";
+
+	int pos1 = str.find("_");
+	int pos2 = str.find(":");
+
+	string uid = str.substr(0, pos1);
+	cout<<uid<<endl;
+
+	int start = pos1 + 1;
+	int len = pos2 - start;
+
+	string feedId = str.substr(start, len);
+	cout<<feedId<<endl;
+
+	string token = str.substr(pos2 + 1);
+	cout<<token<<endl;
+
+}
+
+int testInt() {
+	long long uid = ((long)1 << 32 ) - 1;
+	cout<<uid<<endl;
+}
+
+void testDayTime() {
+	long now = time(NULL);
+	cout << now << endl;
+	struct tm *tm_local = localtime(&now);
+	tm_local->tm_hour = 23;
+	tm_local->tm_min = 59;
+	tm_local->tm_sec = 59;
+	time_t mk_time = mktime(tm_local);
+	cout<<mk_time - now<<endl;
+}
+
 int main() {
 
 //	cal();
 //	test();
 //	ramdom();
-	random_shuffle();
+//	random_shuffle();
+
+//	subtest();
+
+//	testInt();
+
+	testDayTime();
 
 	cout<<"end of main."<<endl;
 
