@@ -207,7 +207,7 @@ int main() {
 	string result;
 	double costTime = 0;
 //	string url = "127.0.0.1:9070/feeds_tab/recommends?uid=33425736&start=0&limit=10";
-	string url = "127.0.01:9060/feed_comment/add_comment?uid=33425736";
+	string url = "http://127.0.0.1:9070/feeds_tab/more";
 	string post = "{\"uid\":\"110002\",\"feed_id\":\"300017\",\"weight\":\"7\",\"code\":\"100\"}";
 //	httpClient->httpGet(url, result, costTime);
 	httpClient->httpPost(url, post, result, costTime);
