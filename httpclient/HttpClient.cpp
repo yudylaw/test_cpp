@@ -31,23 +31,23 @@ int HttpClient::httpGet(const string &url, string &result, double &costTime) {
     curl_easy_setopt(conn, CURLOPT_CONNECTTIMEOUT_MS, conn_timeout);
     curl_easy_setopt(conn, CURLOPT_TIMEOUT_MS, rw_timeout);
     curl_easy_setopt(conn, CURLOPT_MAXCONNECTS, max_connection);
-	code = curl_easy_perform(conn);
+    code = curl_easy_perform(conn);
 
-	if(code != CURLE_OK) {
-		curl_easy_cleanup(conn);
-		curl_slist_free_all(slist);
-		fprintf(stdout, "http get error_msg=[%s]\n", errorBuffer);
-		return code;
-	}
+    if(code != CURLE_OK) {
+        curl_easy_cleanup(conn);
+        curl_slist_free_all(slist);
+        fprintf(stdout, "http get error_msg=[%s]\n", errorBuffer);
+        return code;
+    }
 
     long int http_code = 0;
     curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_code);
     curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &costTime);
 
-	curl_easy_cleanup(conn);
-	curl_slist_free_all(slist);
+    curl_easy_cleanup(conn);
+    curl_slist_free_all(slist);
 
-	return http_code;
+    return http_code;
 }
 
 int HttpClient::httpPost(const string &url, const string &post, string &result, double &costTime) {
@@ -75,23 +75,23 @@ int HttpClient::httpPost(const string &url, const string &post, string &result, 
     curl_easy_setopt(conn, CURLOPT_CONNECTTIMEOUT_MS, conn_timeout);
     curl_easy_setopt(conn, CURLOPT_TIMEOUT_MS, rw_timeout);
     curl_easy_setopt(conn, CURLOPT_MAXCONNECTS, max_connection);
-	code = curl_easy_perform(conn);
+    code = curl_easy_perform(conn);
 
-	if(code != CURLE_OK) {
-		curl_easy_cleanup(conn);
-		curl_slist_free_all(slist);
-		fprintf(stdout, "http get error_msg=[%s]\n", errorBuffer);
-		return code;
-	}
+    if(code != CURLE_OK) {
+        curl_easy_cleanup(conn);
+        curl_slist_free_all(slist);
+        fprintf(stdout, "http get error_msg=[%s]\n", errorBuffer);
+        return code;
+    }
 
     long int http_code = 0;
     curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_code);
     curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &costTime);
 
-	curl_easy_cleanup(conn);
-	curl_slist_free_all(slist);
+    curl_easy_cleanup(conn);
+    curl_slist_free_all(slist);
 
-	return http_code;
+    return http_code;
 }
 
 
