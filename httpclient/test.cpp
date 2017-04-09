@@ -81,6 +81,58 @@ bool init(CURL *&conn, char *url)
   return true;
 }
 
+//
+//  libcurl connection initialization
+//
+
+bool initPost(CURL *&conn, char *url)
+{
+  CURLcode code;
+
+  conn = curl_easy_init();
+
+  if(conn == NULL) {
+    fprintf(stderr, "Failed to create CURL connection\n");
+    exit(EXIT_FAILURE);
+  }
+
+  code = curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, errorBuffer);
+  if(code != CURLE_OK) {
+    fprintf(stderr, "Failed to set error buffer [%d]\n", code);
+    return false;
+  }
+
+  code = curl_easy_setopt(conn, CURLOPT_URL, url);
+  if(code != CURLE_OK) {
+    fprintf(stderr, "Failed to set URL [%s]\n", errorBuffer);
+    return false;
+  }
+
+  //支持重定向
+  code = curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L);
+  if(code != CURLE_OK) {
+    fprintf(stderr, "Failed to set redirect option [%s]\n", errorBuffer);
+    return false;
+  }
+
+  /* Now specify the POST data */
+  curl_easy_setopt(conn, CURLOPT_POSTFIELDS, "{\"uid\":\"110002\",\"feed_id\":\"300017\",\"weight\":\"7\",\"code\":\"100\"}");
+
+  code = curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, writer);
+  if(code != CURLE_OK) {
+    fprintf(stderr, "Failed to set writer [%s]\n", errorBuffer);
+    return false;
+  }
+
+  code = curl_easy_setopt(conn, CURLOPT_WRITEDATA, &buffer);
+  if(code != CURLE_OK) {
+    fprintf(stderr, "Failed to set write data [%s]\n", errorBuffer);
+    return false;
+  }
+
+  return true;
+}
+
 void testGet() {
 	  CURL *conn = NULL;
 	  CURLcode code;
@@ -96,6 +148,8 @@ void testGet() {
 	    exit(EXIT_FAILURE);
 	  }
 
+	  cout<<"init conn success"<<endl;
+
 	  // Retrieve content for the URL
 
 	  code = curl_easy_perform(conn);
@@ -106,11 +160,45 @@ void testGet() {
 	  } else {
 		  fprintf(stdout, "result=[%s]\n", buffer.c_str());
 	  }
+	  //curl_global_init
+	  curl_global_cleanup();
+}
+
+void testPost() {
+	  CURL *conn = NULL;
+	  CURLcode code;
+
+	  curl_global_init(CURL_GLOBAL_DEFAULT);
+
+	  // Initialize CURL connection
+
+	  char url[] = "http://www.baidu.com";
+
+	  if(!initPost(conn, url)) {
+	    fprintf(stderr, "Connection initializion failed\n");
+	    exit(EXIT_FAILURE);
+	  }
+
+	  cout<<"init conn success"<<endl;
+
+	  // Retrieve content for the URL
+
+	  code = curl_easy_perform(conn);
+	  curl_easy_cleanup(conn);
+
+	  if(code != CURLE_OK) {
+		  fprintf(stderr, "error_msg=[%s]\n", errorBuffer);
+	  } else {
+		  fprintf(stdout, "result=[%s]\n", buffer.c_str());
+	  }
+	  //curl_global_init
+	  curl_global_cleanup();
 }
 
 int main() {
 	cout<<"hello curl"<<endl;
-	testGet();
+//	testGet();
+	testPost();
 	cout<<"end"<<endl;
 	return 0;
 }
