@@ -6,15 +6,16 @@
  */
 
 #include <iostream>
-#include "Person.h"
+//#include "Person.h"
 
 using namespace std;
 
 int main() {
 	cout<<"hello gdb"<<endl;
 	string name = "yudy";
-	Person person(20, name);
-	person.sayHello();
+	int age = 100;
+//	Person person(20, name);
+//	person.sayHello();
 	return 0;
 }
 
