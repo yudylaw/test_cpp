@@ -22,11 +22,11 @@ int HttpClient::httpGet(const string &url, string &result, double &costTime) {
     slist = curl_slist_append(slist, "Connection: keep-alive");
     curl_easy_setopt(conn, CURLOPT_HTTPHEADER, slist);
     curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, errorBuffer);
-    curl_easy_setopt(conn, CURLOPT_URL, &url);
+    curl_easy_setopt(conn, CURLOPT_URL, url.c_str());
     //支持重定向
     curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, writer);
-    curl_easy_setopt(conn, CURLOPT_WRITEDATA, &result);
+    curl_easy_setopt(conn, CURLOPT_WRITEDATA, (void *)&result);
     curl_easy_setopt(conn, CURLOPT_NOSIGNAL, 1);//支持多线程、毫秒级超时，存在DNS解析超时不受控制问题
     curl_easy_setopt(conn, CURLOPT_CONNECTTIMEOUT_MS, conn_timeout);
     curl_easy_setopt(conn, CURLOPT_TIMEOUT_MS, rw_timeout);
@@ -62,12 +62,12 @@ int HttpClient::httpPost(const string &url, const string &post, string &result, 
     curl_easy_setopt(conn, CURLOPT_HTTPHEADER, slist);
     curl_easy_setopt(conn, CURLOPT_HTTPPOST, 1);
     curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, errorBuffer);
-    curl_easy_setopt(conn, CURLOPT_URL, &url);
+    curl_easy_setopt(conn, CURLOPT_URL, url.c_str());
     //支持重定向
     curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, writer);
-    curl_easy_setopt(conn, CURLOPT_WRITEDATA, &result);
-    curl_easy_setopt(conn, CURLOPT_POSTFIELDS, &post);
+    curl_easy_setopt(conn, CURLOPT_WRITEDATA, (void *)&result);
+    curl_easy_setopt(conn, CURLOPT_POSTFIELDS, post.c_str());
     curl_easy_setopt(conn, CURLOPT_NOSIGNAL, 1);//支持多线程、毫秒级超时，存在DNS解析超时不受控制问题
     curl_easy_setopt(conn, CURLOPT_CONNECTTIMEOUT_MS, conn_timeout);
     curl_easy_setopt(conn, CURLOPT_TIMEOUT_MS, rw_timeout);
