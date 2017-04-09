@@ -9,6 +9,8 @@
 #include <string>
 #include <curl/curl.h>
 
+#include "HttpClient.h"
+
 using namespace std;
 using std::string;
 
@@ -198,7 +200,14 @@ void testPost() {
 int main() {
 	cout<<"hello curl"<<endl;
 //	testGet();
-	testPost();
+//	testPost();
+
+	HttpClient httpClient = new HttpClient(100, 1000, 500);
+
+	string result;
+	double costTime = 0;
+	httpClient.httpGet("http://127.0.0.1:9060/feed_comment/get_comments?uid=1922167&feed_uid=1922167&feed_id=2311&start=0", result, costTime);
+	cout<<"result="<<result<<", costTime="<<costTime<<endl;
 	cout<<"end"<<endl;
 	return 0;
 }
