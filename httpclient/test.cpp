@@ -6,9 +6,11 @@
  */
 
 #include <iostream>
+#include <string>
 #include <curl/curl.h>
 
 using namespace std;
+using std::string;
 
 //  libcurl variables for error strings and returned data
 
@@ -86,7 +88,9 @@ void testGet() {
 
 	  // Initialize CURL connection
 
-	  if(!init(conn, "http://www.baidu.com")) {
+	  char url[] = "http://www.baidu.com";
+
+	  if(!init(conn, url)) {
 	    fprintf(stderr, "Connection initializion failed\n");
 	    exit(EXIT_FAILURE);
 	  }
