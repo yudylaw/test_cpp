@@ -32,8 +32,6 @@ int HttpClient::httpGet(const string &url, string &result, double &costTime) {
     curl_easy_setopt(conn, CURLOPT_TIMEOUT_MS, rw_timeout);
     curl_easy_setopt(conn, CURLOPT_MAXCONNECTS, max_connection);
 	code = curl_easy_perform(conn);
-	curl_easy_cleanup(conn);
-	curl_slist_free_all(slist);
 
 	if(code != CURLE_OK) {
 		curl_easy_cleanup(conn);
@@ -78,8 +76,6 @@ int HttpClient::httpPost(const string &url, const string &post, string &result, 
     curl_easy_setopt(conn, CURLOPT_TIMEOUT_MS, rw_timeout);
     curl_easy_setopt(conn, CURLOPT_MAXCONNECTS, max_connection);
 	code = curl_easy_perform(conn);
-	curl_easy_cleanup(conn);
-	curl_slist_free_all(slist);
 
 	if(code != CURLE_OK) {
 		curl_easy_cleanup(conn);
