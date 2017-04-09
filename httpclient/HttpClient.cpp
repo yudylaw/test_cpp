@@ -22,7 +22,7 @@ int HttpClient::httpGet(const string &url, string &result, double &costTime) {
     slist = curl_slist_append(slist, "Connection: keep-alive");
     curl_easy_setopt(conn, CURLOPT_HTTPHEADER, slist);
     curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, errorBuffer);
-    curl_easy_setopt(conn, CURLOPT_URL, url);
+    curl_easy_setopt(conn, CURLOPT_URL, &url);
     //支持重定向
     curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, writer);
@@ -62,7 +62,7 @@ int HttpClient::httpPost(const string &url, const string &post, string &result, 
     curl_easy_setopt(conn, CURLOPT_HTTPHEADER, slist);
     curl_easy_setopt(conn, CURLOPT_HTTPPOST, 1);
     curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, errorBuffer);
-    curl_easy_setopt(conn, CURLOPT_URL, url);
+    curl_easy_setopt(conn, CURLOPT_URL, &url);
     //支持重定向
     curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, writer);
