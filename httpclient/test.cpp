@@ -101,9 +101,9 @@ void testGet() {
 	  curl_easy_cleanup(conn);
 
 	  if(code != CURLE_OK) {
-	    fprintf(stderr, "Failed to get [%s]\n", errorBuffer);
+		  fprintf(stderr, "error_msg=[%s]\n", errorBuffer);
 	  } else {
-		  fprintf(stdout, "result=[%s]\n", errorBuffer);
+		  fprintf(stdout, "result=[%s]\n", buffer.c_str());
 	  }
 }
 
