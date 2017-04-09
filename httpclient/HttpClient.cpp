@@ -36,13 +36,18 @@ int HttpClient::httpGet(const string &url, string &result, double &costTime) {
 	curl_slist_free_all(slist);
 
 	if(code != CURLE_OK) {
-	  fprintf(stdout, "http get error_msg=[%s]\n", errorBuffer);
-	  return code;
+		curl_easy_cleanup(conn);
+		curl_slist_free_all(slist);
+		fprintf(stdout, "http get error_msg=[%s]\n", errorBuffer);
+		return code;
 	}
 
     long int http_code = 0;
     curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_code);
     curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &costTime);
+
+	curl_easy_cleanup(conn);
+	curl_slist_free_all(slist);
 
 	return http_code;
 }
@@ -77,13 +82,18 @@ int HttpClient::httpPost(const string &url, const string &post, string &result, 
 	curl_slist_free_all(slist);
 
 	if(code != CURLE_OK) {
-	  fprintf(stdout, "http get error_msg=[%s]\n", errorBuffer);
-	  return code;
+		curl_easy_cleanup(conn);
+		curl_slist_free_all(slist);
+		fprintf(stdout, "http get error_msg=[%s]\n", errorBuffer);
+		return code;
 	}
 
     long int http_code = 0;
     curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_code);
     curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &costTime);
+
+	curl_easy_cleanup(conn);
+	curl_slist_free_all(slist);
 
 	return http_code;
 }

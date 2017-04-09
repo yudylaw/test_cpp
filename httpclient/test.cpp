@@ -210,5 +210,6 @@ int main() {
 	httpClient->httpGet(url, result, costTime);
 	cout<<"result="<<result<<", costTime="<<costTime<<endl;
 	cout<<"end"<<endl;
+	delete httpClient;
 	return 0;
 }
