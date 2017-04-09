@@ -206,8 +206,11 @@ int main() {
 
 	string result;
 	double costTime = 0;
-	string url = "http://127.0.0.1:9060/feed_comment/get_comments?uid=1922167&feed_uid=1922167&feed_id=2311&start=0";
-	httpClient->httpGet(url, result, costTime);
+//	string url = "127.0.0.1:9070/feeds_tab/recommends?uid=33425736&start=0&limit=10";
+	string url = "127.0.01:9060/feed_comment/add_comment?uid=33425736";
+	string post = "{\"uid\":\"110002\",\"feed_id\":\"300017\",\"weight\":\"7\",\"code\":\"100\"}";
+//	httpClient->httpGet(url, result, costTime);
+	httpClient->httpPost(url, post, result, costTime);
 	cout<<"result="<<result<<", costTime="<<costTime<<endl;
 	cout<<"end"<<endl;
 	delete httpClient;
