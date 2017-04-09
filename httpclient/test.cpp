@@ -172,7 +172,7 @@ void testPost() {
 
 	  // Initialize CURL connection
 
-	  char url[] = "http://www.baidu.com";
+	  char url[] = "http://127.0.0.1:9070/feeds_tab/more";
 
 	  if(!initPost(conn, url)) {
 	    fprintf(stderr, "Connection initializion failed\n");
