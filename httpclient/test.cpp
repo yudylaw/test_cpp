@@ -21,8 +21,8 @@ static std::string buffer;
 //  libcurl write callback function
 //
 
-static int writer(char *data, size_t size, size_t nmemb,
-                  std::string *writerData)
+//writerData is a pointer->[buffer]
+static int writer(char *data, size_t size, size_t nmemb, std::string *writerData)
 {
   if(writerData == NULL)
     return 0;
@@ -59,6 +59,7 @@ bool init(CURL *&conn, char *url)
     return false;
   }
 
+  //支持重定向
   code = curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L);
   if(code != CURLE_OK) {
     fprintf(stderr, "Failed to set redirect option [%s]\n", errorBuffer);
