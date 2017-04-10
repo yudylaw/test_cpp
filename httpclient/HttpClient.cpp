@@ -35,15 +35,15 @@ int HttpClient::httpGet(const std::string &url, HttpResponse &response) {
     curl_easy_setopt(conn, CURLOPT_MAXCONNECTS, max_connection);
     code = curl_easy_perform(conn);
 
+    curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &response.http_code);
+    curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &response.cost_time);
+
     if(code != CURLE_OK) {
         curl_easy_cleanup(conn);
         curl_slist_free_all(slist);
         fprintf(stdout, "http get error_msg=[%s]\n", response.error_msg);
         return code;
     }
-
-    curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &response.http_code);
-    curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &response.cost_time);
 
     curl_easy_cleanup(conn);
     curl_slist_free_all(slist);
@@ -77,15 +77,15 @@ int HttpClient::httpPost(const std::string &url, const std::string &post, HttpRe
     curl_easy_setopt(conn, CURLOPT_MAXCONNECTS, max_connection);
     code = curl_easy_perform(conn);
 
+    curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &response.http_code);
+    curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &response.cost_time);
+
     if(code != CURLE_OK) {
         curl_easy_cleanup(conn);
         curl_slist_free_all(slist);
         fprintf(stdout, "http post error_msg=[%s]\n", response.error_msg);
         return code;
     }
-
-    curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &response.http_code);
-    curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &response.cost_time);
 
     curl_easy_cleanup(conn);
     curl_slist_free_all(slist);
