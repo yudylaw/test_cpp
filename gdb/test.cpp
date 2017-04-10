@@ -14,6 +14,8 @@ int main() {
 	cout<<"hello gdb"<<endl;
 	string name = "yudy";
 	int age = 100;
+	Person *p = NULL;
+	p->run();
 //	Person person(20, name);
 //	person.sayHello();
 	return 0;
