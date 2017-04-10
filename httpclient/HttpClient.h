@@ -9,7 +9,6 @@
 #define HTTPCLIENT_HTTPCLIENT_H_
 
 #include <string>
-#include <iostream>
 #include "curl/curl.h"
 
 namespace inke_base {
@@ -17,7 +16,7 @@ namespace http_client {
 
 struct HttpResponse {
     int http_code;
-    std::string error_msg;
+    char error_msg[CURL_ERROR_SIZE];
     std::string result;
     double cost_time;
 };
