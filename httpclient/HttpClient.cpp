@@ -41,7 +41,7 @@ int HttpClient::httpGet(const std::string &url, HttpResponse &response) {
     if(code != CURLE_OK) {
         curl_easy_cleanup(conn);
         curl_slist_free_all(slist);
-        fprintf(stdout, "http get error_msg=[%s]\n", response.error_msg);
+        fprintf(stderr, "http get error_msg=[%s]\n", response.error_msg);
         return code;
     }
 
@@ -83,7 +83,7 @@ int HttpClient::httpPost(const std::string &url, const std::string &post, HttpRe
     if(code != CURLE_OK) {
         curl_easy_cleanup(conn);
         curl_slist_free_all(slist);
-        fprintf(stdout, "http post error_msg=[%s]\n", response.error_msg);
+        fprintf(stderr, "http post error_msg=[%s]\n", response.error_msg);
         return code;
     }
 
