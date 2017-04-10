@@ -29,6 +29,14 @@ void mem() {
     strcpy(d, "haha");
 }
 
+int get(int i){
+    cout << i << endl;
+    return i+1;
+}
+int Cal(int a, int b) {
+    return a+b;
+}
+
 int main() {
 	cout<<"hello gdb"<<endl;
 	string name = "yudy";
@@ -38,7 +46,9 @@ int main() {
 //	Person person(20, name);
 //	person.sayHello();
 //	testArray();
-	mem();
+//	mem();
+	int res = Cal(get(0), get(10));
+	cout<<"res="<<res<<endl;
 	return 0;
 }
 
