@@ -15,6 +15,7 @@ namespace inke_base {
 namespace http_client {
 
 struct HttpResponse {
+    int http_code;
     std::string error_msg;
     std::string result;
     double cost_time;

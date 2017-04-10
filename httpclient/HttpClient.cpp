@@ -18,13 +18,12 @@ int HttpClient::httpGet(const std::string &url, HttpResponse &response) {
         return CURLE_FAILED_INIT;
     }
 
-    char errorBuffer[CURL_ERROR_SIZE];
     curl_easy_setopt(conn, CURLOPT_HTTPGET, 1);
     //设置header属性
     struct curl_slist *slist = NULL;
     slist = curl_slist_append(slist, "Connection: keep-alive");
     curl_easy_setopt(conn, CURLOPT_HTTPHEADER, slist);
-    curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, errorBuffer);
+    curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, (void *)&response.error_msg);
     curl_easy_setopt(conn, CURLOPT_URL, url.c_str());
     //支持重定向
     curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L);
@@ -39,18 +38,17 @@ int HttpClient::httpGet(const std::string &url, HttpResponse &response) {
     if(code != CURLE_OK) {
         curl_easy_cleanup(conn);
         curl_slist_free_all(slist);
-        fprintf(stdout, "http get error_msg=[%s]\n", errorBuffer);
+        fprintf(stdout, "http get error_msg=[%s]\n", response.error_msg.c_str());
         return code;
     }
 
-    long int http_code = 0;
-    curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_code);
+    curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &response.http_code);
     curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &response.cost_time);
 
     curl_easy_cleanup(conn);
     curl_slist_free_all(slist);
 
-    return http_code;
+    return 0;
 }
 
 int HttpClient::httpPost(const std::string &url, const std::string &post, HttpResponse &response) {
@@ -61,13 +59,12 @@ int HttpClient::httpPost(const std::string &url, const std::string &post, HttpRe
         return CURLE_FAILED_INIT;
     }
 
-    char errorBuffer[CURL_ERROR_SIZE];
     //设置header属性
     struct curl_slist *slist = NULL;
     slist = curl_slist_append(slist, "Connection: keep-alive");
     curl_easy_setopt(conn, CURLOPT_HTTPHEADER, slist);
     curl_easy_setopt(conn, CURLOPT_HTTPPOST, 1);
-    curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, errorBuffer);
+    curl_easy_setopt(conn, CURLOPT_ERRORBUFFER, (void *)&response.error_msg);
     curl_easy_setopt(conn, CURLOPT_URL, url.c_str());
     //支持重定向
     curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L);
@@ -83,18 +80,17 @@ int HttpClient::httpPost(const std::string &url, const std::string &post, HttpRe
     if(code != CURLE_OK) {
         curl_easy_cleanup(conn);
         curl_slist_free_all(slist);
-        fprintf(stdout, "http get error_msg=[%s]\n", errorBuffer);
+        fprintf(stdout, "http get error_msg=[%s]\n", response.error_msg.c_str());
         return code;
     }
 
-    long int http_code = 0;
-    curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_code);
+    curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &response.http_code);
     curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &response.cost_time);
 
     curl_easy_cleanup(conn);
     curl_slist_free_all(slist);
 
-    return http_code;
+    return 0;
 }
 
 }

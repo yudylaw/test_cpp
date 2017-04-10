@@ -209,8 +209,8 @@ int main() {
 	string url = "http://127.0.0.1:9070/feeds_tab/more";
 	string post = "{\"uid\":\"110002\",\"feed_id\":\"300017\",\"weight\":\"7\",\"code\":\"100\"}";
 //	httpClient->httpGet(url, result, costTime);
-	httpClient->httpPost(url, post, resp);
-	cout<<"result="<<resp.result<<", costTime="<<resp.cost_time<<endl;
+	int retCode = httpClient->httpPost(url, post, resp);
+	cout<<"retCode="<<retCode<<", http_code="<<resp.http_code<<", result="<<resp.result<<", costTime="<<resp.cost_time<<endl;
 	cout<<"end"<<endl;
 	delete httpClient;
 	return 0;
