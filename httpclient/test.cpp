@@ -210,7 +210,11 @@ int main() {
 	string post = "{\"uid\":\"110002\",\"feed_id\":\"300017\",\"weight\":\"7\",\"code\":\"100\"}";
 //	httpClient->httpGet(url, result, costTime);
 	int retCode = httpClient->httpPost(url, post, resp);
-	cout<<"retCode="<<retCode<<", http_code="<<resp.http_code<<", result="<<resp.result<<", costTime="<<resp.cost_time<<endl;
+	if (retCode != 0) {
+	    cout<<"retCode="<<retCode<<", http_code="<<resp.http_code<<", error_msg="<<resp.error_msg<<", costTime="<<resp.cost_time<<endl;
+	} else {
+	    cout<<"retCode="<<retCode<<", http_code="<<resp.http_code<<", result="<<resp.result<<", costTime="<<resp.cost_time<<endl;
+	}
 	cout<<"end"<<endl;
 	delete httpClient;
 	return 0;
