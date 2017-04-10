@@ -24,3 +24,7 @@ int Person::sayHello() {
 	return i;
 }
 
+int Person::run() {
+    cout<<"empty run"<<endl;
+    return 0;
+}

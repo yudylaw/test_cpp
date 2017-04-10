@@ -36,6 +36,8 @@ public:
 
 	int sayHello();
 
+	int run();
+
 private:
 	int age;
 	string name;
