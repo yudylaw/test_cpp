@@ -16,9 +16,10 @@ namespace http_client {
 
 struct HttpResponse {
     int http_code;
+    double cost_time;
     char error_msg[CURL_ERROR_SIZE];
     std::string result;
-    double cost_time;
+    HttpResponse():http_code(0), cost_time(0) {}
 };
 
 class HttpClient {
