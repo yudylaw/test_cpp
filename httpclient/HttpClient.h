@@ -9,6 +9,7 @@
 #define HTTPCLIENT_HTTPCLIENT_H_
 
 #include <string>
+#include <iostream>
 #include "curl/curl.h"
 
 namespace inke_base {
