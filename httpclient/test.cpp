@@ -13,6 +13,7 @@
 
 using namespace std;
 using std::string;
+using namespace inke_base::http_client;
 
 //  libcurl variables for error strings and returned data
 
@@ -203,15 +204,13 @@ int main() {
 //	testPost();
 
 	HttpClient *httpClient = new HttpClient(100, 1000, 500);
-
-	string result;
-	double costTime = 0;
+	HttpResponse resp;
 //	string url = "127.0.0.1:9070/feeds_tab/recommends?uid=33425736&start=0&limit=10";
 	string url = "http://127.0.0.1:9070/feeds_tab/more";
 	string post = "{\"uid\":\"110002\",\"feed_id\":\"300017\",\"weight\":\"7\",\"code\":\"100\"}";
 //	httpClient->httpGet(url, result, costTime);
-	httpClient->httpPost(url, post, result, costTime);
-	cout<<"result="<<result<<", costTime="<<costTime<<endl;
+	httpClient->httpPost(url, post, resp);
+	cout<<"result="<<resp.result<<", costTime="<<resp.cost_time<<endl;
 	cout<<"end"<<endl;
 	delete httpClient;
 	return 0;

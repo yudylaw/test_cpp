@@ -11,7 +11,14 @@
 #include <string>
 #include "curl/curl.h"
 
-using namespace std;
+namespace inke_base {
+namespace http_client {
+
+struct HttpResponse {
+    std::string error_msg;
+    std::string result;
+    double cost_time;
+};
 
 class HttpClient {
 public:
@@ -24,8 +31,8 @@ public:
 	~HttpClient() {
 		curl_global_cleanup();
 	}
-	int httpGet(const string &url, string &result, double &costTime);
-	int httpPost(const string &url, const string &post, string &result, double &costTime);
+	int httpGet(const std::string &url, HttpResponse &response);
+	int httpPost(const std::string &url, const std::string &post, HttpResponse &response);
 
 	/**
 	 * libcurl write callback function
@@ -44,5 +51,8 @@ private:
 	int conn_timeout;
 	int rw_timeout;
 };
+
+}
+}
 
 #endif /* HTTPCLIENT_HTTPCLIENT_H_ */

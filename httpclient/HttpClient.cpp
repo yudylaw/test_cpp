@@ -7,7 +7,10 @@
 
 #include "HttpClient.h"
 
-int HttpClient::httpGet(const string &url, string &result, double &costTime) {
+namespace inke_base {
+namespace http_client {
+
+int HttpClient::httpGet(const std::string &url, HttpResponse &response) {
     CURLcode code;
     CURL* conn = curl_easy_init();
     if (NULL == conn)
@@ -26,7 +29,7 @@ int HttpClient::httpGet(const string &url, string &result, double &costTime) {
     //支持重定向
     curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, writer);
-    curl_easy_setopt(conn, CURLOPT_WRITEDATA, (void *)&result);
+    curl_easy_setopt(conn, CURLOPT_WRITEDATA, (void *)&response.result);
     curl_easy_setopt(conn, CURLOPT_NOSIGNAL, 1);//支持多线程、毫秒级超时，存在DNS解析超时不受控制问题
     curl_easy_setopt(conn, CURLOPT_CONNECTTIMEOUT_MS, conn_timeout);
     curl_easy_setopt(conn, CURLOPT_TIMEOUT_MS, rw_timeout);
@@ -42,7 +45,7 @@ int HttpClient::httpGet(const string &url, string &result, double &costTime) {
 
     long int http_code = 0;
     curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_code);
-    curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &costTime);
+    curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &response.cost_time);
 
     curl_easy_cleanup(conn);
     curl_slist_free_all(slist);
@@ -50,7 +53,7 @@ int HttpClient::httpGet(const string &url, string &result, double &costTime) {
     return http_code;
 }
 
-int HttpClient::httpPost(const string &url, const string &post, string &result, double &costTime) {
+int HttpClient::httpPost(const std::string &url, const std::string &post, HttpResponse &response) {
     CURLcode code;
     CURL* conn = curl_easy_init();
     if (NULL == conn)
@@ -69,7 +72,7 @@ int HttpClient::httpPost(const string &url, const string &post, string &result, 
     //支持重定向
     curl_easy_setopt(conn, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(conn, CURLOPT_WRITEFUNCTION, writer);
-    curl_easy_setopt(conn, CURLOPT_WRITEDATA, (void *)&result);
+    curl_easy_setopt(conn, CURLOPT_WRITEDATA, (void *)&response.result);
     curl_easy_setopt(conn, CURLOPT_POSTFIELDS, post.c_str());
     curl_easy_setopt(conn, CURLOPT_NOSIGNAL, 1);//支持多线程、毫秒级超时，存在DNS解析超时不受控制问题
     curl_easy_setopt(conn, CURLOPT_CONNECTTIMEOUT_MS, conn_timeout);
@@ -86,7 +89,7 @@ int HttpClient::httpPost(const string &url, const string &post, string &result, 
 
     long int http_code = 0;
     curl_easy_getinfo(conn, CURLINFO_RESPONSE_CODE, &http_code);
-    curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &costTime);
+    curl_easy_getinfo(conn, CURLINFO_TOTAL_TIME, &response.cost_time);
 
     curl_easy_cleanup(conn);
     curl_slist_free_all(slist);
@@ -94,4 +97,6 @@ int HttpClient::httpPost(const string &url, const string &post, string &result, 
     return http_code;
 }
 
+}
+}
 
